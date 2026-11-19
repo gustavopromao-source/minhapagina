@@ -1,0 +1,249 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Formulário de Qualificação de Clientes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#1b2330;--muted:#5d6878;--line:#dfe3ea;--bg:#f5f6f8;--card:#fff;--accent:#1F3864;--accent2:#2f6fdb;--ok:#1f8a4c}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.45}
+  .wrap{max-width:620px;margin:0 auto;padding:28px 18px 60px}
+  header h1{font-size:26px;margin:0 0 6px;letter-spacing:-.01em}
+  header p{margin:0 0 22px;color:var(--muted)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 18px;margin-bottom:16px}
+  .card h2{font-size:15px;margin:0 0 14px;color:var(--accent);text-transform:uppercase;letter-spacing:.04em}
+  label.q{display:block;font-weight:600;font-size:14.5px;margin:14px 0 6px}
+  label.q:first-of-type{margin-top:0}
+  input[type=text],input[type=tel],input[type=email],select,textarea{width:100%;font:inherit;font-size:15px;padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--accent2);outline-offset:0;border-color:transparent}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chips label{display:inline-flex}
+  .chips input{position:absolute;opacity:0;pointer-events:none}
+  .chips span{padding:9px 14px;border:1px solid var(--line);border-radius:999px;font-size:14px;cursor:pointer;background:#fff;user-select:none}
+  .chips input:checked+span{background:var(--accent);border-color:var(--accent);color:#fff}
+  .chips input:focus-visible+span{outline:2px solid var(--accent2)}
+  .hint{font-size:12.5px;color:var(--muted);margin-top:4px}
+  .consent{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:var(--muted)}
+  .consent input{margin-top:3px;width:18px;height:18px}
+  button,.btn{display:block;width:100%;text-align:center;font:inherit;font-weight:700;font-size:16px;padding:14px;border-radius:12px;border:0;background:var(--accent);color:#fff;cursor:pointer;text-decoration:none}
+  .btn.wa{background:#25D366;color:#073b1c}
+  .btn.sec{background:#fff;color:var(--accent);border:1px solid var(--accent);margin-top:10px}
+  .err{color:#b3261e;font-size:13.5px;margin-top:8px;display:none}
+  #done{display:none}
+  #done h2{color:var(--ok)}
+  pre{white-space:pre-wrap;background:#f1f3f6;border-radius:10px;padding:12px;font-size:13px;font-family:inherit}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Encontre o imóvel certo para você</h1>
+    <p>Responda em 2 minutos. Com isso o corretor já te atende com opções que fazem sentido para o seu momento.</p>
+  </header>
+
+  <div id="empBanner" style="display:none;background:#FFC845;color:#1F3864;font-weight:700;border-radius:12px;padding:12px 14px;margin-bottom:16px"></div>
+  <form id="f" novalidate>
+    <div class="card">
+      <h2>Seus dados</h2>
+      <label class="q" for="nome">Nome</label>
+      <input id="nome" type="text" autocomplete="name" required>
+      <label class="q" for="whats">WhatsApp</label>
+      <input id="whats" type="tel" placeholder="(00) 00000-0000" autocomplete="tel" required>
+      <label class="q" for="email">E-mail (opcional)</label>
+      <input id="email" type="email" autocomplete="email">
+      <label class="q" for="cidade">Cidade e bairro de interesse</label>
+      <input id="cidade" type="text">
+    </div>
+
+    <div class="card">
+      <h2>O que você procura</h2>
+      <label class="q" for="perfil">Qual destas opções combina com você?</label>
+      <select id="perfil" required>
+        <option value="">Escolha uma opção</option>
+        <option value="morar">Quero comprar um imóvel para morar</option>
+        <option value="investidor">Quero investir em imóveis</option>
+      </select>
+
+      <div id="extra"></div>
+
+      <label class="q" for="valor">Tem algum valor de entrada? Se sim, quanto? (R$)</label>
+      <input id="valor" type="text" inputmode="numeric" placeholder="Ex.: 30.000">
+      <p class="hint">Se não tiver entrada, pode deixar em branco.</p>
+    </div>
+
+    <div class="card">
+      <h2>Para te atender melhor</h2>
+      <label class="q">Você já sabe o tipo e a região do imóvel?</label>
+      <div class="chips">
+        <label><input type="radio" name="definido" value="Sim"><span>Sim, já sei</span></label>
+        <label><input type="radio" name="definido" value="Não"><span>Ainda não</span></label>
+      </div>
+
+      <label class="q">O poder de decisão da compra envolve outras pessoas? Como por ex.: pais, cônjuges, filhos.</label>
+      <div class="chips">
+        <label><input type="radio" name="decisor" value="Não, decido sozinho(a)" data-score="Sim"><span>Não, decido sozinho(a)</span></label>
+        <label><input type="radio" name="decisor" value="Sim, decido junto com outras pessoas" data-score="Sim"><span>Sim, decido junto com outras pessoas</span></label>
+        <label><input type="radio" name="decisor" value="Sim, outra pessoa decide" data-score="Não"><span>Sim, outra pessoa decide</span></label>
+      </div>
+
+      <label class="q">Aceita uma ligação ou visita nos próximos dias?</label>
+      <div class="chips">
+        <label><input type="radio" name="visita" value="Sim"><span>Sim</span></label>
+        <label><input type="radio" name="visita" value="Não"><span>Prefiro só mensagens</span></label>
+      </div>
+
+      <label class="q">Como conheceu a gente?</label>
+      <div class="chips">
+        <label><input type="radio" name="origem" value="Meta Ads (Instagram/Facebook)"><span>Instagram ou Facebook</span></label>
+        <label><input type="radio" name="origem" value="Google Ads"><span>Google</span></label>
+        <label><input type="radio" name="origem" value="Portal (ZAP/Viva Real/OLX)"><span>Portal de imóveis</span></label>
+        <label><input type="radio" name="origem" value="Indicação"><span>Indicação</span></label>
+        <label><input type="radio" name="origem" value="Outro"><span>Outro</span></label>
+      </div>
+
+      <label class="q" for="obs">Algo mais que o corretor deve saber? (opcional)</label>
+      <textarea id="obs" rows="3"></textarea>
+    </div>
+
+    <div class="card">
+      <label class="consent"><input id="lgpd" type="checkbox"> Autorizo o uso destes dados apenas para receber contato e ofertas de imóveis. Posso pedir a exclusão a qualquer momento.</label>
+      <div class="err" id="err"></div>
+      <div style="height:14px"></div>
+      <button type="submit">Ver minhas respostas e enviar</button>
+    </div>
+  </form>
+
+  <div id="done" class="card">
+    <h2>Pronto! Falta um toque</h2>
+    <p>Toque no botão abaixo para enviar suas respostas ao corretor pelo WhatsApp.</p>
+    <a id="waBtn" class="btn wa" href="#" target="_blank" rel="noopener">Enviar pelo WhatsApp</a>
+    <p class="hint" id="waNum"></p>
+    <button class="btn sec" id="copy" type="button">Copiar respostas</button>
+    <button class="btn sec" id="back" type="button">Corrigir respostas</button>
+    <pre id="resumo"></pre>
+  </div>
+</div>
+
+<script>
+/* ===== CONFIGURAÇÃO: troque pelo WhatsApp do corretor (55 + DDD + número, só dígitos) ===== */
+const WHATSAPP_CORRETOR = "5563984545362";
+/* ======================================================================================= */
+
+const NOMES = {morar:"Comprar para morar",investidor:"Investidor"};
+
+const EXTRA = {
+  morar:[["Renda familiar mensal (somada)","radio",["Até R$ 3.200","R$ 3.200 a R$ 5.000","R$ 5.000 a R$ 9.600","R$ 9.600 a R$ 13.000","Acima de R$ 13.000"]],
+         ["Alguém da família tem 3 anos ou mais de carteira assinada (FGTS)?","radio",["Sim","Não","Não sei"]],
+         ["Está com o nome limpo?","radio",["Sim","Não","Não sei"]],
+         ["Quantos quartos precisa?","radio",["1","2","3","4 ou mais"]]],
+  investidor:[["Objetivo do investimento","radio",["Renda de aluguel","Revenda / valorização","Os dois"]],
+              ["Já possui outros imóveis?","radio",["Sim","Não"]]]
+};
+
+// links antigos (#mcmv, #upgrade, #altopadrao) continuam funcionando e caem em "morar"
+const ALIAS = {mcmv:"morar",upgrade:"morar",altopadrao:"morar"};
+
+const $ = id => document.getElementById(id);
+const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function renderExtra(){
+  const p = $("perfil").value, box = $("extra");
+  box.innerHTML = "";
+  (EXTRA[p]||[]).forEach((q,i)=>{
+    const id = "x"+i;
+    if(q[1]==="text"){
+      box.insertAdjacentHTML("beforeend",`<label class="q" for="${id}">${esc(q[0])}</label><input id="${id}" type="text" data-q="${esc(q[0])}">`);
+    } else {
+      box.insertAdjacentHTML("beforeend",`<label class="q">${esc(q[0])}</label><div class="chips" data-q="${esc(q[0])}">`+
+        q[2].map(o=>`<label><input type="radio" name="${id}" value="${esc(o)}"><span>${esc(o)}</span></label>`).join("")+`</div>`);
+    }
+  });
+}
+$("perfil").addEventListener("change", renderExtra);
+
+// link de cada vídeo pode pré-selecionar o perfil: ...#morar, #investidor, ou um empreendimento (#palma)
+const EMPREENDIMENTOS = {palma:{nome:"Residencial Palma (MRV)", local:"Plano Diretor Norte, Palmas - TO", perfil:"morar"}};
+let EMP = null;
+function fromHash(){
+  const h = location.hash.replace("#","");
+  EMP = EMPREENDIMENTOS[h] || null;
+  const b = $("empBanner");
+  if(EMP){ b.textContent = "Interesse: " + EMP.nome + " · " + EMP.local; b.style.display = "block"; $("perfil").value = EMP.perfil; renderExtra(); if(!$("cidade").value) $("cidade").value = "Palmas - Plano Diretor Norte"; }
+  else { b.style.display = "none"; const p = ALIAS[h] || h; if(NOMES[p]){ $("perfil").value = p; renderExtra(); } }
+}
+window.addEventListener("hashchange", fromHash);
+renderExtra(); fromHash();
+
+const radio = n => { const el = document.querySelector(`input[name="${n}"]:checked`); return el ? el.value : ""; };
+
+$("f").addEventListener("submit", e=>{
+  e.preventDefault();
+  const err = [];
+  if(!$("nome").value.trim()) err.push("seu nome");
+  if($("whats").value.replace(/\D/g,"").length < 10) err.push("um WhatsApp com DDD");
+  if(!$("perfil").value) err.push("o que você procura");
+  if(!$("lgpd").checked) err.push("a autorização de uso dos dados");
+  if(err.length){ $("err").textContent = "Falta preencher: " + err.join(", ") + "."; $("err").style.display="block"; return; }
+  $("err").style.display="none";
+
+  const p = $("perfil").value;
+  const entrada = $("valor").value.trim();
+  const temEntrada = /[1-9]/.test(entrada.replace(/\D/g,""));
+  const decEl = document.querySelector('input[name="decisor"]:checked');
+  const crit = [
+    ["Tem entrada?", temEntrada ? "Sim" : "Não"],
+    ["Imóvel definido?", radio("definido")==="Sim" ? "Sim" : "Não"],
+    ["Fala com o decisor?", decEl ? decEl.dataset.score : "Não"],
+    ["Respondeu e aceitou visita?", radio("visita")==="Sim" ? "Sim" : "Não"],
+    ["Indicação?", radio("origem")==="Indicação" ? "Sim" : "Não"]
+  ];
+  const extras = [];
+  document.querySelectorAll("#extra [data-q]").forEach(el=>{
+    const q = el.dataset.q;
+    let v = el.tagName==="INPUT" ? el.value.trim() : ((el.querySelector("input:checked")||{}).value||"");
+    if(v) extras.push(`${q}: ${v}`);
+  });
+
+  const linhas = [
+    "*Novo lead pelo formulário*",
+    "",
+    `Nome: ${$("nome").value.trim()}`,
+    `WhatsApp: ${$("whats").value.trim()}`,
+    $("email").value.trim() ? `E-mail: ${$("email").value.trim()}` : null,
+    $("cidade").value.trim() ? `Cidade / bairro: ${$("cidade").value.trim()}` : null,
+    `Perfil: ${NOMES[p]}`,
+    EMP ? `Empreendimento: ${EMP.nome}` : null,
+    radio("origem") ? `Origem: ${radio("origem")}` : null,
+    `Entrada (R$): ${entrada || "não informou"}`,
+    decEl ? `Decisão da compra: ${decEl.value}` : null,
+    "",
+    "*Critérios (para a planilha)*",
+    ...crit.map(c=>`${c[0]} ${c[1]}`),
+    extras.length ? "" : null,
+    extras.length ? "*Detalhes do perfil*" : null,
+    ...extras,
+    $("obs").value.trim() ? "" : null,
+    $("obs").value.trim() ? `Observações: ${$("obs").value.trim()}` : null
+  ].filter(x=>x!==null);
+  const msg = linhas.join("\n");
+  $("resumo").textContent = msg.replace(/\*/g,"");
+  $("waBtn").href = "https://wa.me/" + WHATSAPP_CORRETOR + "?text=" + encodeURIComponent(msg);
+  $("waNum").textContent = "Se o botão não abrir, envie as respostas para o WhatsApp +" + WHATSAPP_CORRETOR + ".";
+  $("f").style.display="none"; $("done").style.display="block"; window.scrollTo(0,0);
+});
+$("back").addEventListener("click", ()=>{ $("done").style.display="none"; $("f").style.display="block"; });
+$("copy").addEventListener("click", async ()=>{
+  try{ await navigator.clipboard.writeText($("resumo").textContent); $("copy").textContent="Copiado!"; }
+  catch(e){ $("copy").textContent="Selecione o texto abaixo e copie"; }
+  setTimeout(()=>{$("copy").textContent="Copiar respostas";},2500);
+});
+</script>
+</body>
+</html>
+
+</body></html>
