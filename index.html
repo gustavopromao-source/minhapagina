@@ -166,13 +166,16 @@ function renderExtra(){
 $("perfil").addEventListener("change", renderExtra);
 
 // link de cada vídeo pode pré-selecionar o perfil: ...#morar, #investidor, ou um empreendimento (#palma)
-const EMPREENDIMENTOS = {palma:{nome:"Residencial Palma (MRV)", local:"Plano Diretor Norte, Palmas - TO", perfil:"morar"}};
+const EMPREENDIMENTOS = {
+  palma:{nome:"Residencial Palma (MRV)", local:"Plano Diretor Norte, Palmas - TO", perfil:"morar", cidade:"Palmas - Plano Diretor Norte"},
+  palmeiraserena:{nome:"Palmeira Serena (MRV)", local:"Quadra 1101 Sul, Plano Diretor Sul, Palmas - TO", perfil:"morar", cidade:"Palmas - Plano Diretor Sul"}
+};
 let EMP = null;
 function fromHash(){
   const h = location.hash.replace("#","");
   EMP = EMPREENDIMENTOS[h] || null;
   const b = $("empBanner");
-  if(EMP){ b.textContent = "Interesse: " + EMP.nome + " · " + EMP.local; b.style.display = "block"; $("perfil").value = EMP.perfil; renderExtra(); if(!$("cidade").value) $("cidade").value = "Palmas - Plano Diretor Norte"; }
+  if(EMP){ b.textContent = "Interesse: " + EMP.nome + " · " + EMP.local; b.style.display = "block"; $("perfil").value = EMP.perfil; renderExtra(); if(!$("cidade").value) $("cidade").value = EMP.cidade; }
   else { b.style.display = "none"; const p = ALIAS[h] || h; if(NOMES[p]){ $("perfil").value = p; renderExtra(); } }
 }
 window.addEventListener("hashchange", fromHash);
